@@ -1,0 +1,121 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{resumo}[2026/08/04 Template para Resumo Simples]
+
+% ------------------------------------------------------------
+% Idioma e codificação
+% ------------------------------------------------------------
+
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage[brazilian]{babel}
+\RequirePackage{newtx}
+\RequirePackage{xspace}
+
+% ------------------------------------------------------------
+% Pacotes
+% ------------------------------------------------------------
+
+\RequirePackage[a4paper,margin=2cm]{geometry}
+\RequirePackage{setspace}
+\RequirePackage{ragged2e}
+\RequirePackage{graphicx}
+\RequirePackage{url}
+\RequirePackage[dvipsnames]{xcolor}
+\RequirePackage[normalem]{ulem}
+\RequirePackage{eso-pic} % cabeçalho
+
+% ------------------------------------------------------------
+% Configuração global do documento
+% ------------------------------------------------------------
+
+\AtBeginDocument{%
+    \onehalfspacing
+    \justifying
+    \setlength{\parindent}{0pt}
+}
+
+\pagestyle{plain}
+
+% ------------------------------------------------------------
+% Parâmetros do template
+% ------------------------------------------------------------
+
+\newlength{\summarysep}
+\setlength{\summarysep}{0.35cm}
+
+% ------------------------------------------------------------
+% Metadados
+% ------------------------------------------------------------
+
+\newcommand{\summaryheader}{%
+    \IfFileExists{header.pdf}{%
+        \AddToShipoutPictureFG*{%
+            \AtPageUpperLeft{%
+                \raisebox{-\height}{%
+                    \includegraphics[width=\paperwidth]{header.pdf}%
+                }%
+            }%
+        }%
+    }{}
+}
+
+\makeatletter
+
+\newcommand{\emails}[1]{%
+    \gdef\@emails{#1}%
+}
+
+\gdef\@emails{}
+
+\renewcommand{\maketitle}{%
+    \begingroup
+    \centering
+
+    \summaryheader
+    \vspace*{0.5cm} % altura do banner
+
+    {\bfseries\MakeUppercase{\@title}\par}
+
+    \vspace{\summarysep}
+
+    \@author\par
+
+    \vspace{0.15cm}
+
+    \@emails\par
+
+    \vspace{\summarysep}
+
+    {\Large\bfseries RESUMO\par}
+
+    \endgroup
+
+    \vspace{\summarysep}
+}
+
+\makeatother
+
+% ------------------------------------------------------------
+% Controle das cores de revisão
+% ------------------------------------------------------------
+
+\colorlet{orange}{BrickRed}
+\colorlet{green}{ForestGreen}
+\colorlet{brown}{Sepia}
+\colorlet{blue}{NavyBlue}
+\colorlet{purple}{RoyalPurple}
+
+\newif\ifreview
+\reviewfalse
+
+\newcommand{\EnableReviewColors}{\reviewtrue}
+\newcommand{\DisableReviewColors}{\reviewfalse}
+
+\newcommand{\reviewcolor}[2]{%
+    \ifreview
+        {\color{#1}#2}%
+    \else
+        #2%
+    \fi
+    \ignorespaces
+}
