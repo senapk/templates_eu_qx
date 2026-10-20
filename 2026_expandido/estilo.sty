@@ -69,7 +69,9 @@
 % 7. Bibliografia
 %%%%%%%%%%%%%%%%%%%%%
 \RequirePackage[style=abnt, backend=biber, url=true, language=auto]{biblatex}
+\RequirePackage[hidelinks]{hyperref} % URLs clicáveis, inclusive quando quebram de linha
 \addbibresource{referencias.bib}
+\providecommand{\citeonline}{\textcite}               % Compatibilidade com modelos baseados em abntex2cite
 \renewcommand{\mkbibnamefamily}[1]{#1}               % Para deixar o nome em minúsculo na citação
 \DeclareFieldFormat{url}{Disponível em \url{#1}}     % Remova os símbolos <> que encapsulam as URLs
 
